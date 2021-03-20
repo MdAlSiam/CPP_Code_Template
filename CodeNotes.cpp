@@ -49,13 +49,13 @@ string str;
 // [how many fibonacci numbers][how many digits can be at max]
 int fib[5005][1200]; 
 
-void make_fib(){
+void make_fib() {
     fib[0][0] = 0;
     fib[1][0] = 1;
 
     // In the matrix, LSB at left most position
-    for(ll i = 2; i < 5005; i++){
-        for(ll j = 0; j < 1200; j++){
+    for(ll i = 2; i < 5005; i++) {
+        for(ll j = 0; j < 1200; j++) {
 
             fib[i][j] += fib[i-1][j] + fib[i-2][j];
 
@@ -71,7 +71,7 @@ void make_fib(){
 
 // GCD
 
-ll gcd(ll a, ll b){
+ll gcd(ll a, ll b) {
     if(a % b == 0) return b;
     return gcd(b, a%b);
 }
@@ -79,9 +79,9 @@ ll gcd(ll a, ll b){
 
 // Trailing 0s of n!
 
-ll zerosinfact(ll n){
+ll zerosinfact(ll n) {
     ll ret = 0;
-    for(ll i = 5; i <= n; i *= 5){
+    for(ll i = 5; i <= n; i *= 5) {
         ret += (n/i);
     }
     //Also count 2s if required
@@ -125,19 +125,19 @@ ll make_fact() {
 ll prime[sqrt(maxn)+10];
 bool mark[maxn] = {false};
 
-void sieve1(){
+void sieve1() {
     prime[0] = 2;
     ll index = 1;
 
-    for(ll i = 3; i*i <= maxn; i += 2){
+    for(ll i = 3; i*i <= maxn; i += 2) {
         if(mark[i] == false){
-            for(ll j = i*i; j <= maxn; j += i+i){
+            for(ll j = i*i; j <= maxn; j += i+i) {
                 mark[j] = true;
             }
         }
     }
 
-    for(ll i = 3; i <= maxn && index < (ll)sqrt(maxn)+10; i += 2){
+    for(ll i = 3; i <= maxn && index < (ll)sqrt(maxn)+10; i += 2) {
         if(mark[i] == false) prime[index++] = i;
     }
 }
@@ -146,10 +146,10 @@ void sieve1(){
 
 vector<ll> pr;
 
-void ektuonnorokom(){
-	for(ll i = 2; i < 86028157; i++){
+void ektuonnorokom() {
+	for(ll i = 2; i < 86028157; i++) {
 		if(mark[i] == false) pr.pb(i);
-		for(ll j = 0; j < pr.size() && pr[j]*i <= 86028157; j++){
+		for(ll j = 0; j < pr.size() && pr[j]*i <= 86028157; j++) {
 			mark[i*pr[j]] = true; ///composite marks are true
 
 		}
@@ -310,7 +310,7 @@ ll coins[] = {50, 25, 10, 5, 1};
 ll make; // target amount
 ll dp[6][8000];
 
-ll call(ll i, ll amount){
+ll call(ll i, ll amount) {
     if (i >= 5){
         if (amount == 0LL) return 1LL;
         else return 0LL;
@@ -328,7 +328,7 @@ ll call(ll i, ll amount){
     return ret = ret1 + ret2;
 }
 
-int in_main_for_calling(){
+int in_main_for_calling() {
     memset(dp, -1, sizeof(dp));
 
     while(scanf("%lld", &make) == 1LL)
@@ -339,7 +339,7 @@ int in_main_for_calling(){
 
 int val[56], permit[56], memtab[56][1024], n, make;
 
-ll explore(ll i, ll amount){
+ll explore(ll i, ll amount) {
     if(amount == make) return 1LL;
     if(i == n) return 0LL;
 
@@ -347,7 +347,7 @@ ll explore(ll i, ll amount){
 
     ll ret = 0;
 
-    for(ll xx = 0; xx <= permit[i] && amount+val[i]*xx <= make; xx++){
+    for(ll xx = 0; xx <= permit[i] && amount+val[i]*xx <= make; xx++) {
         ret += explore(i+1, amount+val[i]*xx);
         ret %= mod;
     }
@@ -368,7 +368,7 @@ ll n = sizeof(value) / sizeof(ll);
 ll dp[maxn];
 ll dir[maxn];
 
-ll longestfrom(ll u){
+ll longestfrom(ll u) {
 
     if(dp[u] != -1LL) return dp[u];
 
@@ -385,7 +385,7 @@ ll longestfrom(ll u){
     return dp[u] = 1+maxlen;
 }
 
-int at_main_LIS(){
+int at_main_LIS() {
     memset(dp, -1, sizeof(dp));
     memset(dir, -1, sizeof(dir));
 
@@ -401,7 +401,7 @@ int at_main_LIS(){
     cout << "Length of LIS: " << LIS_len << endl;
     ll curr = start;
 
-    while(1){
+    while(1) {
         cout << value[curr] << " ";
         curr = dir[curr];
         if(dir[curr] == -1){
@@ -456,9 +456,9 @@ ll tracks[26]; // Set of numbers
 ll mat[26][100005]; //[num_of_elements_in_set][target_subset_sum]
 ll total_length, number_of_tracks;
 
-ll makematrix(){
-    for(ll i = 0; i <= number_of_tracks; i++){
-        for(ll j = 0; j <= total_length; j++){
+ll makematrix() {
+    for(ll i = 0; i <= number_of_tracks; i++) {
+        for(ll j = 0; j <= total_length; j++) {
             if(i == 0 || j == 0) mat[i][j] = 0;
             else if(j < tracks[i]) mat[i][j] = mat[i-1][j];
             else mat[i][j] = max(mat[i-1][j], tracks[i] + mat[i-1][j-tracks[i]]);
@@ -467,7 +467,7 @@ ll makematrix(){
     return mat[number_of_tracks][total_length];
 }
 
-void traverse_print(){
+void traverse_print() {
     ll taken[26], index = 0;
     ll xp = number_of_tracks, yp = total_length;
     while(1){
@@ -510,7 +510,7 @@ bool isSafe(int ro, int col){
 
 }
 
-void call(int col){
+void call(int col) {
 
     if (col == 9) {
         /// Eight queens are already placed safely for a combination!
@@ -587,7 +587,7 @@ void BFS_and_Levelling(ll src) {
 // -> length of arg should be greater 
 // -> In case of length tie, arg should be at left
 
-struct info{
+struct info {
     ll len;
     ll left;
     ll right;
@@ -605,29 +605,3 @@ struct info{
 };
 // initialise priority queue
 priority_queue<info> pq;
-
-// 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
