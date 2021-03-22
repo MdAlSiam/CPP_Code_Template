@@ -577,6 +577,118 @@ void BFS_and_Levelling(ll src) {
     }
 }
 
+// Levelling and counting number of nodes in subtree
+
+std::vector<ll> adj_list[maxn];
+std::vector<ll>::iterator it;
+ll level[maxn];
+ll subordinate[maxn];
+ll profit[maxn];
+
+void searc_h(ll dad, ll son){
+
+    level[son] = level[dad] + 1;
+    subordinate[son] = 1;
+  
+ 	for(ll i = 0; i < adj_list[son].size(); i++){
+ 		ll son_of_son = adj_list[son][i];
+ 		if(son_of_son == dad) continue;
+  
+ 		searc_h(son, son_of_son);
+  
+ 		subordinate[son] += subordinate[son_of_son];
+ 	}
+ 
+     profit[son] = subordinate[son] - 1 - level[son];
+
+}
+
+// Graph Coloring
+
+ll maxcolor(ll src) {
+
+    ll redkount = 0, greenkount = 0;
+
+    queue<ll> q;
+    q.push(src);
+    color[src] = RED;
+    redkount++;
+
+    while (!q.empty()) {
+
+        ll u = q.front();
+        q.pop();
+
+        list<ll>::iterator it;
+
+        for (it = adj_list[u].begin(); it != adj_list[u].end(); it++) {
+            ll v = *it;
+            if (color[v] == WHITE) {
+                if(color[u] == GREEN) {
+                    color[v] = RED;
+                    redkount++;
+                }
+                else{
+                    color[v] = GREEN;
+                    greenkount++;
+                }
+                q.push(v);
+            }
+        }
+    }
+
+    return max(redkount, greenkount);
+}
+
+// Diameter of a Tree/BFS with DFS
+
+vector<ll> adj_list[200005];
+ll level[200005];
+
+void dfs(ll dad, ll son) {
+    if (dad == -1) {
+        level[son] = 0;
+    }
+    else {
+        level[son] = level[dad] + 1;
+    }
+
+    for (ll son_of_son : adj_list[son]) {
+        if (son_of_son == dad) {
+            continue;
+        }
+        dfs(son, son_of_son);
+    }
+}
+
+Main() {
+    // DFS from any node
+    dfs(-1, a);
+    
+    // find any maxlevel node
+    ll id = 1;
+    for (ll i = 1; i <= n; i++) {
+        if (level[i] > level[id]) {
+            id = i;
+        }
+    }
+
+    // again bfs from that maxlevel node
+    Dfs(-1, id);
+
+	// again find new maxlevel
+    id = 1;
+    for (ll i = 1; i <= n; i++) {
+        if (level[i] > level[id]) {
+            id = i;
+        }
+    }
+
+    // hence, level[id] (maxlevel) is the diameter of the tree
+    // diameter of a tree = the longest path between two leaves
+}
+
+
 //Constructing priority queue
 
 // এখানে arg কে প্রায়োরিটি কিউতে টপে রাখা হবে। 
@@ -605,3 +717,430 @@ struct info {
 };
 // initialise priority queue
 priority_queue<info> pq;
+
+// Printing Permutations
+
+void permutation(ll lo, ll hi) {
+
+    if (lo == hi) {
+        for(ll i = 0; i <= hi; i++)
+            printf(i == hi ? "%d\n" : "%d ", init[i]);
+        return;
+    }
+
+    for(ll i = lo; i <= hi; i++) {
+        // Swap every other element including currrent element with the current element
+        swap(init[lo], init[i]);
+        permutation(lo+1, hi);
+        // Backtrack: Place the current element at the lowest position again
+        swap(init[lo], init[i]);
+    }
+}
+
+// Lexicographically Sorted Permutation using C++ Library
+
+ll arr[] = {1, 2, 3}; 
+sort(arr, arr+3); 
+
+// In asceding order 
+do { 
+    cout << arr[0] << " " << arr[1] << " " << arr[2] << "\n"; 
+} while (next_permutation(arr, arr + 3)); 
+
+// In descending order
+do { 
+    cout << arr[0] << " " << arr[1] << " " << arr[2] << "\n"; 
+} while (prev_permutation(arr, arr + 3)); 
+
+// Segment Tree: The Mighty Segment Tree
+
+#define mx 100001LL
+ll arr[mx];
+ll tree[3*mx];
+
+void init(ll node, ll b, ll e) {
+    //sum from b till e in tree[node]
+    if (b == e) {
+        tree[node] = arr[b];
+        return;
+    }
+
+    ll Left = node * 2;
+    ll Right = node * 2 + 1;
+    ll mid = (b + e) / 2;
+
+    init(Left, b, mid);
+    init(Right, mid + 1, e);
+
+    // Fetch sum from subordinates
+    tree[node] = tree[Left] + tree[Right];
+}
+
+ll query(ll node, ll b, ll e, ll i, ll j) {
+    // Current node contains sum from index b to index e
+    // Looking for the sum from index i to index j
+
+    // If current node does not contain any part from the segment we are looking for
+    // বাইরে চলে গিয়েছে
+    if (i > e || j < b) return 0; 
+
+    // Current node is in the range we are looking for
+    // রিলেভেন্ট সেগমেন্ট
+    if (i <= b && e <= j) return tree[node]; 
+
+    // Oterwise go to the subordinate nodes
+    // আরো ভাঙতে হবে
+    int Left = node * 2; 
+    int Right = node * 2 + 1;
+    int mid = (b + e) / 2;
+
+    int p1 = query(Left, b, mid, i, j);
+    int p2 = query(Right, mid + 1, e, i, j);
+    // Return the sum got from the subordinates
+    // বাম এবং ডান পাশের যোগফল
+    return p1 + p2; 
+}
+
+void update(ll node, ll b, ll e, ll i, ll newvalue) {
+    // Current node contains sum from index b to index e
+    // We want to assign newvalue to index i
+
+    // Current range does not contain index i
+    // বাইরে চলে গিয়েছে
+    if (i > e || i < b)
+        return;
+
+    // We are at index i
+    // রিলেভেন্ট সেগমেন্ট
+    if (b >= i && e <= i) { 
+        tree[node] = newvalue;
+        return;
+    }
+
+    // আরো ভাঙতে হবে
+    ll Left = node * 2; 
+    ll Right = node * 2 + 1;
+    ll mid = (b + e) / 2;
+
+    update(Left, b, mid, i, newvalue);
+    update(Right, mid + 1, e, i, newvalue);
+
+    tree[node] = tree[Left] + tree[Right];
+}
+
+int seg_tree_main() {
+    READ("in");
+    ll n;
+    cin >> n;
+    For (i, 1, n+1) cin >> arr[i];
+    init(1, 1, n);
+    update(1, 1, n, 2, 0);
+    cout << query(1, 1, n, 1, 3) << endl;
+    update(1, 1, n, 2, 2);
+    cout << query(1, 1, n, 2, 2) << endl;
+    return 0;
+}
+
+// Upper Bound and Lower Bound
+
+Iterator lower_bound (Iterator first, Iterator last, const val)
+Iterator upper_bound (Iterator first, Iterator last, const val)
+ 
+// lower_bound returns an iterator pointing to the first element in the range [first,last) 
+// which has a value not less than (greater than or equal) ‘val’.
+ 
+// upper_bound returns an iterator pointing to the first element in the range [first,last) 
+// which has a value greater than ‘val’.
+
+// For lower_bound():
+//     Intialise the startIndex as 0 and endIndex as N – 1.
+//     Compare K with the middle element(say arr[mid]) of the array.
+//     If the middle element is greater equals to K then update the endIndex as middle index (mid).
+//     Else Update startIndex as mid + 1.
+//     Repeat the above steps untill startIndex is less than endIndex.
+//     After all the above steps the startIndex is the lower_bound of K in the given array.
+// For upper_bound():
+//     Intialise the startIndex as 0 and endIndex as N – 1.
+//     Compare K with the middle element(say arr[mid]) of the array.
+//     If the middle element is less than equals to K then update the startIndex as middle index + 1 (mid + 1).
+//     Else Update endIndex as mid.
+//     Repeat the above steps untill startIndex is less than endIndex.
+//     After all the above steps the startIndex is the upper_bound of K in the given array.
+
+// C program for iterative implementation 
+// of the above approach 
+  
+// Function to implement lower_bound 
+int lower_bound(int arr[], int N, int X) 
+{ 
+    int mid; 
+  
+    // Initialise starting index and 
+    // ending index 
+    int low = 0; 
+    int high = N; 
+  
+    // Till low is less than high 
+    while (low < high) { 
+        mid = low + (high - low) / 2; 
+  
+        // If X is less than or equal 
+        // to arr[mid], then find in 
+        // left subarray 
+        if (X <= arr[mid]) { 
+            high = mid; 
+        } 
+  
+        // If X is greater arr[mid] 
+        // then find in right subarray 
+        else { 
+            low = mid + 1; 
+        } 
+    } 
+  
+    // Return the lower_bound index 
+    return low; 
+} 
+  
+// Function to implement upper_bound 
+int upper_bound(int arr[], int N, int X) 
+{ 
+    int mid; 
+  
+    // Initialise starting index and 
+    // ending index 
+    int low = 0; 
+    int high = N; 
+  
+    // Till low is less than high 
+    while (low < high) { 
+        // Find the middle index 
+        mid = low + (high - low) / 2; 
+  
+        // If X is greater than or equal 
+        // to arr[mid] then find 
+        // in right subarray 
+        if (X >= arr[mid]) { 
+            low = mid + 1; 
+        } 
+  
+        // If X is less than arr[mid] 
+        // then find in left subarray 
+        else { 
+            high = mid; 
+        } 
+    } 
+  
+    // Return the upper_bound index 
+    return low; 
+} 
+  
+// Function to implement lower_bound 
+// and upper_bound of X 
+void printBound(int arr[], int N, int X) 
+{ 
+    int idx; 
+  
+    // If lower_bound doesn't exists 
+    if (lower_bound(arr, N, X) == N) { 
+        printf("Lower bound doesn't exist"); 
+    } 
+    else { 
+  
+        // Find lower_bound 
+        idx = lower_bound(arr, N, X); 
+        printf("Lower bound of %d is"
+               "% d at index % d\n ", 
+               X, 
+               arr[idx], idx); 
+    } 
+  
+    // If upper_bound doesn't exists 
+    if (upper_bound(arr, N, X) == N) { 
+        printf("Upper bound doesn't exist"); 
+    } 
+    else { 
+  
+        // Find upper_bound 
+        idx = upper_bound(arr, N, X); 
+        printf("Upper bound of %d is"
+               "% d at index % d\n ", 
+               X, 
+               arr[idx], idx); 
+    } 
+} 
+  
+// Driver Code 
+int in_upper_lower_bound_main() 
+{ 
+    // Given array 
+    int arr[] = { 4, 6, 10, 12, 18, 20 }; 
+    int N = sizeof(arr) / sizeof(arr[0]); 
+  
+    // Element whose lower bound and 
+    // upper bound to be found 
+    int X = 6; 
+  
+    // Function Call 
+    printBound(arr, N, X); 
+    return 0; 
+} 
+
+
+// LCA: Lowest Common Ancestor
+// See Shafayet Blog for detail: http://www.shafaetsplanet.com/?p=1831
+// https://ideone.com/LK6jk0
+
+vector<ll> adj_list[200005];
+ll level[200005];
+ll dadNode[200005]; // First parents
+ll sparseTable[200005][23]; // To store 2^j-th parent of node i in (i, j) // log(200005)=17.6(<22)
+
+void dfs(ll dad, ll son) {
+    if (dad == -1) {
+        level[son] = 0;
+        dadNode[son] = dad;
+    }
+    else {
+        level[son] = level[dad] + 1;
+        dadNode[son] = dad;
+    }
+
+    printf("In ndoe %lld\n", son);
+
+    for (ll grandson : adj_list[son]) {
+        if (grandson == dad) {
+            continue;
+        }
+        dfs(son, grandson);
+    }
+}
+
+void initSparseTable() {
+    memset(sparseTable, -1, sizeof(sparseTable));
+
+    // Fill the table column by column
+    for (ll j = 0; (1<<j) <= 200005; j++) {
+        for (ll i = 1; i <= 23; i++) {
+            if (j == 0) 
+                sparseTable[i][j] = dadNode[i];
+            else if (sparseTable[i][j-1] != -1)
+                sparseTable[i][j] = sparseTable[sparseTable[i][j-1]][j-1];
+        }
+    }
+}
+
+ll lcaQuery(ll p, ll q) {
+    // Assuming p is in deeper level than q
+    if (level[p] < level[q]) swap(p, q);
+
+    ll logVal = 1;
+    while (true) {
+        ll nextCandidate = logVal+1;
+        if ((1 << nextCandidate) > level[p]) break;
+        logVal++;
+    }
+    
+    // Making levels the same
+    for (ll i = logVal; i >= 0; i--) {
+        if (level[p]-(1<<i) >= level[q]) {
+            p = sparseTable[p][i];
+        }
+    }
+
+    if (p == q) {
+        return p;
+    }
+
+    // Moving the levels up at the same rate
+    for (ll i = logVal; i >= 0; i--) {
+        if (sparseTable[p][i] != -1 && sparseTable[p][i] != sparseTable[q][i]) {
+            p = sparseTable[p][i];
+            q = sparseTable[q][i];
+        }
+    }
+
+    return dadNode[p];
+}
+
+int main() {
+    ll n, nQueries;
+    cin >> n >> nQueries;
+    for (ll i = 0; i <= n; i++) {
+        adj_list[i].clear();
+        level[i] = -1;
+        dadNode[i] = -1;
+    }
+    for (ll i = 1; i <= n-1; i++) {
+        ll u, v;
+        cin >> u >> v;
+        adj_list[u].push_back(v);
+        adj_list[v].push_back(u);
+    }
+
+    dfs(-1, 1);
+    for (ll i = 1; i <= n; i++) 
+        printf(i == n ? "%lld\n" : "%lld ", level[i]);
+    for (ll i = 1; i <= n; i++) 
+        printf(i == n ? "%lld\n" : "%lld ", dadNode[i]);
+
+    initSparseTable();
+    for (ll i = 0; i <= n; i++) 
+        for (ll j = 0; j <= 10; j++) 
+            printf(j == 10 ? "%lld\n" : "%lld ", sparseTable[i][j]);
+        printf("\n");
+
+    while (nQueries--) {
+        ll u, v;
+        cin >> u >> v;
+        ll lca = lcaQuery(u, v);
+        cout << "LCA of " << u << " and " << v << " : " << lca << endl;
+    }
+}
+
+// Merge Sort (n log n)
+
+void merge_sort(ll* ara, ll lo, ll hi) {
+    if (lo == hi) {
+        return;
+    }
+
+    ll mid = lo + ((hi - lo) / 2);
+    merge_sort(ara, lo, mid);
+    merge_sort(ara, mid+1, hi);
+
+    ll i, j, k, kk, temp[hi-lo+1];
+
+    for (i = lo, j = mid+1, k = 0, kk = lo; kk <= hi; k++, kk++) {
+        if (i == mid+1) {
+            temp[k] = ara[j];
+            j++;
+        }
+        else if (j == hi+1) {
+            temp[k] = ara[i];
+            i++;
+        }
+        else if (ara[i] <= ara[j]) {
+            temp[k] = ara[i];
+            i++;
+        }
+        else {
+            temp[k] = ara[j];
+            j++;
+        }
+    }
+
+    for (kk = lo, k = 0; kk <= hi; kk++, k++) {
+        ara[kk] = temp[k];
+    }
+}
+
+void solve() {
+    printf("This is a test case.\n");
+} 
+ 
+int32_t main() {
+    test = 1;
+    scl(test);
+    while (test--) solve();
+}
