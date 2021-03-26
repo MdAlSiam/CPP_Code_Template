@@ -1098,6 +1098,41 @@ int main() {
     }
 }
 
+// Disjoint Set Union
+
+ll parent[100009], ranks[100009];
+
+void initialize_nodes_till(ll limit) {
+    for (ll i = 0; i <= limit; i++) {
+        parent[i] = i;
+        ranks[i] = 1;
+    }
+}
+
+ll find_parent_and_compress(ll node) {
+    if (parent[node] == node) return node;
+    return parent[node] = find_parent_and_compress(parent[node]);
+}
+
+ll make_friendship_and_kount_friends_in_circle(ll node1, ll node2) {
+
+    ll u = find_parent_and_compress(node1);
+    ll v = find_parent_and_compress(node2);
+
+    if (u == v) return ranks[u];
+
+    if (ranks[u] > ranks[v]) {
+        parent[v] = u;
+        ranks[u] += ranks[v];
+        return ranks[u];;
+    }
+    else {
+        parent[u] = v;
+        ranks[v] += ranks[u];
+        return ranks[v];
+    }
+}
+
 // Merge Sort (n log n)
 
 void merge_sort(ll* ara, ll lo, ll hi) {
