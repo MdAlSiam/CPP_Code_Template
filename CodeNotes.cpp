@@ -59,11 +59,10 @@ void make_fib() {
 
             fib[i][j] += fib[i-1][j] + fib[i-2][j];
 
-	        if(fib[i][j] > 9){
+	        if(fib[i][j] > 9) {
                 fib[i][j+1] += fib[i][j] / 10;
                 fib[i][j] %= 10;
             }
-
         }
     }
 }
@@ -116,6 +115,9 @@ ll nCk(ll n, ll k) {
 ll facts[1100];
 ll make_fact() {
     facts[0] = facts[1] = 1;
+    for (ll i = 2; i < 1100; i++) {
+        facts[i] = multiply(facts[i-1], i);
+    }
 }
 
 // Sieve Techniques
@@ -151,7 +153,6 @@ void ektuonnorokom() {
 		if(mark[i] == false) pr.pb(i);
 		for(ll j = 0; j < pr.size() && pr[j]*i <= 86028157; j++) {
 			mark[i*pr[j]] = true; ///composite marks are true
-
 		}
 	}
 }
@@ -265,16 +266,15 @@ void find_prime_factors(ll n) {
     }
 }
 
-
 // nCr DP
 ll dp[100][100];
 
 ll find_nCr(ll n, ll r) {
-    if(r == n) return 1LL;
-    if(r == 1) return n;
+    if (r == n) return 1LL;
+    if (r == 1) return n;
 
     ll &ret = dp[n][r];
-    if(ret != -1) return ret;
+    if (ret != -1) return ret;
 
     ret = find_nCr(n-1, r) + find_nCr(n-1, r-1);
 
@@ -287,12 +287,12 @@ ll weight[1010], cost[1010], dp[1010][40];
 ll number_of_items, capacity;
 
 ll knapsac(ll i, ll w) {
-    if(i >= number_of_items) return 0LL;
-    if(dp[i][w] != -1) return dp[i][w];
+    if (i >= number_of_items) return 0LL;
+    if (dp[i][w] != -1) return dp[i][w];
 
     ll profit1 = 0, profit2 = 0;
 
-    if(w + weight[i] <= capacity){
+    if (w + weight[i] <= capacity) {
         profit1 = cost[i] + knapsac(i+1, w+weight[i]);
     }
 
@@ -317,7 +317,7 @@ ll call(ll i, ll amount) {
     }
 
     ll& ret = dp[i][amount];
-    if(ret != -1) return ret;
+    if (ret != -1) return ret;
 
     ll ret1 = 0LL, ret2 = 0LL;
 
@@ -328,10 +328,10 @@ ll call(ll i, ll amount) {
     return ret = ret1 + ret2;
 }
 
-int in_main_for_calling() {
+int in_main_for_calling_coin_change() {
     memset(dp, -1, sizeof(dp));
 
-    while(scanf("%lld", &make) == 1LL)
+    while (scanf("%lld", &make) == 1LL)
         printf("%lld\n", call(0, make));
 }
 
@@ -340,14 +340,14 @@ int in_main_for_calling() {
 int val[56], permit[56], memtab[56][1024], n, make;
 
 ll explore(ll i, ll amount) {
-    if(amount == make) return 1LL;
-    if(i == n) return 0LL;
+    if (amount == make) return 1LL;
+    if (i == n) return 0LL;
 
-    if(memtab[i][amount] != -1) return memtab[i][amount];
+    if (memtab[i][amount] != -1) return memtab[i][amount];
 
     ll ret = 0;
 
-    for(ll xx = 0; xx <= permit[i] && amount+val[i]*xx <= make; xx++) {
+    for (ll xx = 0; xx <= permit[i] && amount+val[i]*xx <= make; xx++) {
         ret += explore(i+1, amount+val[i]*xx);
         ret %= mod;
     }
@@ -359,7 +359,7 @@ ll explore(ll i, ll amount) {
 
 ll setBit(ll N, ll pos) {return N = N | (1LL<<pos);}
 ll resetBit(ll N, ll pos) {return N = N & ~(1<<pos);}
-bool checkBit (ll N, ll pos) {return (bool)(N & (1<<pos));}
+bool checkBit(ll N, ll pos) {return (bool)(N & (1<<pos));}
 
 // LIS with solution print
 
@@ -370,12 +370,12 @@ ll dir[maxn];
 
 ll longestfrom(ll u) {
 
-    if(dp[u] != -1LL) return dp[u];
+    if (dp[u] != -1LL) return dp[u];
 
     ll maxlen = 0;
-    for(int v = u+1; v < n; v++){
-        if(value[v] > value[u]){
-            if(longestfrom(v) > maxlen){
+    for (int v = u+1; v < n; v++) {
+        if (value[v] > value[u]) {
+            if (longestfrom(v) > maxlen) {
                 maxlen = longestfrom(v);
                 dir[u] = v;
             }
@@ -391,8 +391,8 @@ int at_main_LIS() {
 
     ll start, LIS_len = 0;
 
-    for(ll i = 0; i < n; i++){
-        if(longestfrom(i) > LIS_len){
+    for (ll i = 0; i < n; i++) {
+        if (longestfrom(i) > LIS_len) {
             LIS_len = longestfrom(i);
             start = i;
         }
@@ -401,7 +401,7 @@ int at_main_LIS() {
     cout << "Length of LIS: " << LIS_len << endl;
     ll curr = start;
 
-    while(1) {
+    while (1) {
         cout << value[curr] << " ";
         curr = dir[curr];
         if(dir[curr] == -1){
@@ -456,21 +456,21 @@ ll tracks[26]; // Set of numbers
 ll mat[26][100005]; //[num_of_elements_in_set][target_subset_sum]
 ll total_length, number_of_tracks;
 
-ll makematrix() {
-    for(ll i = 0; i <= number_of_tracks; i++) {
-        for(ll j = 0; j <= total_length; j++) {
+ll make_matrix() {
+    for (ll i = 0; i <= number_of_tracks; i++) {
+        for (ll j = 0; j <= total_length; j++) {
             if(i == 0 || j == 0) mat[i][j] = 0;
-            else if(j < tracks[i]) mat[i][j] = mat[i-1][j];
+            else if (j < tracks[i]) mat[i][j] = mat[i-1][j];
             else mat[i][j] = max(mat[i-1][j], tracks[i] + mat[i-1][j-tracks[i]]);
         }
     }
     return mat[number_of_tracks][total_length];
 }
 
-void traverse_print() {
+void traverse_print() { 
     ll taken[26], index = 0;
     ll xp = number_of_tracks, yp = total_length;
-    while(1){
+    while (true) {
         if(xp == 0 || yp == 0) break;
         else if(mat[xp-1][yp] == mat[xp][yp]) xp--;
         else{
@@ -479,7 +479,7 @@ void traverse_print() {
             xp--;
         }
     }
-    for(ll i = index-1; i >= 0; i--) printf("%d ", taken[i]);
+    for (ll i = index-1; i >= 0; i--) printf("%d ", taken[i]);
 }
 
 // 8 Queen Problem 
@@ -490,7 +490,7 @@ int position[10];
 // for counting how many combinations exist
 int kount = 0;
 
-bool isSafe(int ro, int col){
+bool isSafe(int ro, int col) {
     /// To check the queen at position (ro, col) is safe or not
     /// First check risks created by the previous queens
 
@@ -517,21 +517,20 @@ void call(int col) {
         /// Dam da dam da dam!
         /// Print this!
 
-        for(int i = 1; i <= 8; i++){
-            if(i == 1) cout << "{ " << position[i] << ", ";
+        for (int i = 1; i <= 8; i++) {
+            if (i == 1) cout << "{ " << position[i] << ", ";
             else if (i == 8) cout << position[i] << " },\n";
-            else cout  << position[i] << ", ";
+            else cout << position[i] << ", ";
         }
 
         kount++; /// A new combination found.
 
         return;
-
     }
 
     /// Traverse all rows and see if that row is safe for that column
     for (int i = 1; i <= 8; i++) {
-        if(isSafe(i, col)) {
+        if (isSafe(i, col)) {
             /// If the position is safe
             /// then place a queen here and move to the next column
             position[col] = i;
@@ -548,6 +547,19 @@ int n_queen_main() {
     call(1);
     cout << "Total = " << kount << endl;
 }
+
+/*
+    11 12 13 14
+    21 22 23 24
+    31 32 33 34
+    41 42 43 44
+    51 52 53 54
+
+    In major diagonal, value of (row+column) is the same, and increases by one per diagonal
+    Here, 2, 3, 4, 5, ...
+
+    In minor diagonal, value of (row+column) increases by 2 per element.
+*/
 
 // Longest Path using BFS
 
@@ -579,8 +591,8 @@ void BFS_and_Levelling(ll src) {
 
 // Levelling and counting number of nodes in subtree
 
-std::vector<ll> adj_list[maxn];
-std::vector<ll>::iterator it;
+vector<ll> adj_list[maxn];
+vector<ll>::iterator it;
 ll level[maxn];
 ll subordinate[maxn];
 ll profit[maxn];
@@ -661,7 +673,7 @@ void dfs(ll dad, ll son) {
     }
 }
 
-Main() {
+in_the_diameter_of_tree_main() {
     // DFS from any node
     dfs(-1, a);
     
@@ -674,7 +686,7 @@ Main() {
     }
 
     // again bfs from that maxlevel node
-    Dfs(-1, id);
+    dfs(-1, id);
 
 	// again find new maxlevel
     id = 1;
@@ -689,7 +701,7 @@ Main() {
 }
 
 
-//Constructing priority queue
+// Constructing priority queue
 
 // এখানে arg কে প্রায়োরিটি কিউতে টপে রাখা হবে। 
 // arg এর লেংথ বেশি হলে প্রায়োরিটি পাবে।
@@ -715,6 +727,7 @@ struct info {
         return arg.len > len;
     }
 };
+
 // initialise priority queue
 priority_queue<info> pq;
 
@@ -871,8 +884,7 @@ Iterator upper_bound (Iterator first, Iterator last, const val)
 // of the above approach 
   
 // Function to implement lower_bound 
-int lower_bound(int arr[], int N, int X) 
-{ 
+int lower_bound(int arr[], int N, int X) { 
     int mid; 
   
     // Initialise starting index and 
@@ -903,8 +915,7 @@ int lower_bound(int arr[], int N, int X)
 } 
   
 // Function to implement upper_bound 
-int upper_bound(int arr[], int N, int X) 
-{ 
+int upper_bound(int arr[], int N, int X) { 
     int mid; 
   
     // Initialise starting index and 
@@ -937,8 +948,7 @@ int upper_bound(int arr[], int N, int X)
   
 // Function to implement lower_bound 
 // and upper_bound of X 
-void printBound(int arr[], int N, int X) 
-{ 
+void printBound(int arr[], int N, int X) { 
     int idx; 
   
     // If lower_bound doesn't exists 
@@ -985,7 +995,6 @@ int in_upper_lower_bound_main()
     printBound(arr, N, X); 
     return 0; 
 } 
-
 
 // LCA: Lowest Common Ancestor
 // See Shafayet Blog for detail: http://www.shafaetsplanet.com/?p=1831
@@ -1179,5 +1188,3 @@ int32_t main() {
     scl(test);
     while (test--) solve();
 }
-
-// Commit - MdAlSiam - md.al.siam.008
