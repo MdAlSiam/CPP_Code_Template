@@ -132,7 +132,7 @@ void sieve1() {
     ll index = 1;
 
     for(ll i = 3; i*i <= maxn; i += 2) {
-        if(mark[i] == false){
+        if(mark[i] == false) {
             for(ll j = i*i; j <= maxn; j += i+i) {
                 mark[j] = true;
             }
@@ -182,15 +182,15 @@ void sieve() {
 ll mark[maxn]; // number upper limit
 // [r_i][till this number] = how many r_i prime factors holder occured till this number
 ll cumkount[11][maxn]; 
-void sieve_cumkount(){
+void sieve_cumkount() {
 	for (ll i = 2; i <= maxn; i += 2) mark[i]++;
 	for (ll i = 3; i <= maxn; i += 2) {
 		if (mark[i] == 0) {
 			for(ll j = i; j <= maxn; j += i) mark[j]++;
         }
     }
-	for(ll i = 0; i < 11; i++){
-		for(ll j = 1; j <= maxn; j++){
+	for(ll i = 0; i < 11; i++) {
+		for(ll j = 1; j <= maxn; j++) {
 			if(mark[j] == i) cumkount[i][j] = cumkount[i][j-1] + 1;
 			else cumkount[i][j] = cumkount[i][j-1];
 		}
@@ -311,7 +311,7 @@ ll make; // target amount
 ll dp[6][8000];
 
 ll call(ll i, ll amount) {
-    if (i >= 5){
+    if (i >= 5) {
         if (amount == 0LL) return 1LL;
         else return 0LL;
     }
@@ -404,7 +404,7 @@ int at_main_LIS() {
     while (1) {
         cout << value[curr] << " ";
         curr = dir[curr];
-        if(dir[curr] == -1){
+        if(dir[curr] == -1 ) {
             cout << value[curr] << " ";
             break;
         }
@@ -578,7 +578,7 @@ void BFS_and_Levelling(ll src) {
         ll u = q.front();
         q.pop();
 
-        for(it = adj_list[u].begin(); it != adj_list[u].end(); it++){
+        for(it = adj_list[u].begin(); it != adj_list[u].end(); it++) {
             ll v = *it;
             // Make the level as much as possible to make the path longer
             if (level[v] < level[u]+1) {
@@ -597,12 +597,12 @@ ll level[maxn];
 ll subordinate[maxn];
 ll profit[maxn];
 
-void searc_h(ll dad, ll son){
+void searc_h(ll dad, ll son) {
 
     level[son] = level[dad] + 1;
     subordinate[son] = 1;
   
- 	for(ll i = 0; i < adj_list[son].size(); i++){
+ 	for(ll i = 0; i < adj_list[son].size(); i++) {
  		ll son_of_son = adj_list[son][i];
  		if(son_of_son == dad) continue;
   
@@ -611,7 +611,7 @@ void searc_h(ll dad, ll son){
  		subordinate[son] += subordinate[son_of_son];
  	}
  
-     profit[son] = subordinate[son] - 1 - level[son];
+    profit[son] = subordinate[son] - 1 - level[son];
 
 }
 
@@ -803,12 +803,12 @@ ll query(ll node, ll b, ll e, ll i, ll j) {
 
     // Oterwise go to the subordinate nodes
     // আরো ভাঙতে হবে
-    int Left = node * 2; 
-    int Right = node * 2 + 1;
-    int mid = (b + e) / 2;
+    ll Left = node * 2; 
+    ll Right = node * 2 + 1;
+    ll mid = (b + e) / 2;
 
-    int p1 = query(Left, b, mid, i, j);
-    int p2 = query(Right, mid + 1, e, i, j);
+    ll p1 = query(Left, b, mid, i, j);
+    ll p2 = query(Right, mid + 1, e, i, j);
     // Return the sum got from the subordinates
     // বাম এবং ডান পাশের যোগফল
     return p1 + p2; 
@@ -842,7 +842,6 @@ void update(ll node, ll b, ll e, ll i, ll newvalue) {
 }
 
 int seg_tree_main() {
-    READ("in");
     ll n;
     cin >> n;
     For (i, 1, n+1) cin >> arr[i];
@@ -956,7 +955,6 @@ void printBound(int arr[], int N, int X) {
         printf("Lower bound doesn't exist"); 
     } 
     else { 
-  
         // Find lower_bound 
         idx = lower_bound(arr, N, X); 
         printf("Lower bound of %d is"
