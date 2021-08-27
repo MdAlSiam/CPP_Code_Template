@@ -733,6 +733,31 @@ struct info {
 // initialise priority queue
 priority_queue<info> pq;
 
+// Invoke compare in sorting vector
+sort(strs.begin(), strs.end(), 
+    [](const auto &a, const auto &b) {
+        if (a.size() == b.size()) return a < b;
+        return a.size() > b.size();
+    }
+);
+
+// Check if subsequnce of other (Bruteforce)
+bool isSubsequence(string subseqholder, string subseqcandidate) {
+    int pointer = 0;
+    for (int i = 0; i < subseqcandidate.size(); i++) {        
+        while (true) {
+            if (pointer >= subseqholder.size()) return false;
+            if (subseqholder[pointer] == subseqcandidate[i]) {
+                pointer++;
+                break;
+            }
+            pointer++;
+        }
+    }
+
+    return true;
+}
+
 // Printing Permutations
 
 void permutation(ll lo, ll hi) {
