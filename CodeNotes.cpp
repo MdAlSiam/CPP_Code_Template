@@ -46,7 +46,7 @@ ll x, y, z = -1, maxi, mini;
 ll ara[maxn];
 string str;
 
-// Fibonacci Freeze
+// [001] Fibonacci Freeze
 
 // [how many fibonacci numbers][how many digits can be at max]
 int fib[5005][1200]; 
@@ -70,7 +70,7 @@ void make_fib() {
 }
 
 
-// GCD
+// [002] GCD
 
 ll gcd(ll a, ll b) {
     if(a % b == 0) return b;
@@ -78,7 +78,7 @@ ll gcd(ll a, ll b) {
 }
 
 
-// Trailing 0s of n!
+// [003] Trailing 0s of n!
 
 ll zerosinfact(ll n) {
     ll ret = 0;
@@ -89,7 +89,7 @@ ll zerosinfact(ll n) {
     return ret;
 }
 
-// Bigmod, Inverse Mod, Factorial, nCk
+// [004] Bigmod, Inverse Mod, Factorial, nCk
 
 ll multiply(ll num1, ll num2) {return ((num1%mod)*(num2%mod))%mod;}
 	 
@@ -122,7 +122,7 @@ ll make_fact() {
     }
 }
 
-// Sieve Techniques
+// [005] Sieve Techniques
 
 // Sieve 1
 
@@ -179,7 +179,7 @@ void sieve() {
 		if(mark[i/2] == false) primes[pin++] = i;
 }
 
-// Prime Divisor Kount
+// [006] Prime Divisor Kount
 
 ll mark[maxn]; // number upper limit
 // [r_i][till this number] = how many r_i prime factors holder occured till this number
@@ -199,7 +199,7 @@ void sieve_cumkount() {
 	}
 }
 
-// Prime Factors
+// [007] Prime Factors
 
 void primeFactors(ll n) {
     ll num = n;
@@ -268,7 +268,7 @@ void find_prime_factors(ll n) {
     }
 }
 
-// nCr DP
+// [008] nCr DP
 ll dp[100][100];
 
 ll find_nCr(ll n, ll r) {
@@ -283,7 +283,7 @@ ll find_nCr(ll n, ll r) {
     return ret;
 }
 
-// Knapsac DP [UVa 10130]
+// [009] Knapsac DP [UVa 10130]
 
 ll weight[1010], cost[1010], dp[1010][40];
 ll number_of_items, capacity;
@@ -305,7 +305,7 @@ ll knapsac(ll i, ll w) {
     return dp[i][w];
 }
 
-// Coin Change DP (without setting memory for every query)
+// [010] Coin Change DP (without setting memory for every query)
 
 // Coin values
 ll coins[] = {50, 25, 10, 5, 1};
@@ -337,7 +337,7 @@ int in_main_for_calling_coin_change() {
         printf("%lld\n", call(0, make));
 }
 
-// Coin Change DP (with limited number of coins) [LOJ 1231]
+// [011] Coin Change DP (with limited number of coins) [LOJ 1231]
 
 int val[56], permit[56], memtab[56][1024], n, make;
 
@@ -357,13 +357,13 @@ ll explore(ll i, ll amount) {
     return memtab[i][amount] = ret;
 }
 
-// Bitwise Operations
+// [012] Bitwise Operations
 
 ll setBit(ll N, ll pos) {return N = N | (1LL<<pos);}
 ll resetBit(ll N, ll pos) {return N = N & ~(1<<pos);}
 bool checkBit(ll N, ll pos) {return (bool)(N & (1<<pos));}
 
-// LIS with solution print
+// [013] LIS with solution print
 
 ll value[] = {-200, -100, 5, 0, 9, 2, 7, 3, 4};
 ll n = sizeof(value) / sizeof(ll);
@@ -413,7 +413,7 @@ int at_main_LIS() {
     }
 }
 
-// Longest Common Subsequence
+// [014] Longest Common Subsequence
 
 /*
 Example Iteration
@@ -452,7 +452,7 @@ void make_lcs(string str1, string str2) {
 }
 
 
-// Subset Sum Table (UVa 624)
+// [015] Subset Sum Table (UVa 624)
 
 ll tracks[26]; // Set of numbers
 ll mat[26][100005]; //[num_of_elements_in_set][target_subset_sum]
@@ -484,7 +484,7 @@ void traverse_print() {
     for (ll i = index-1; i >= 0; i--) printf("%d ", taken[i]);
 }
 
-// 8 Queen Problem 
+// [016] 8 Queen Problem 
 
 // Will store the position of row for each column where any queen exist safely
 int position[10];
@@ -563,7 +563,7 @@ int n_queen_main() {
     In minor diagonal, value of (row+column) increases by 2 per element.
 */
 
-// Longest Path using BFS
+// [017] Longest Path using BFS
 
 ll level[maxn] = {-1};
 vector<ll> adj_list[maxn];
@@ -591,7 +591,7 @@ void BFS_and_Levelling(ll src) {
     }
 }
 
-// Levelling and counting number of nodes in subtree
+// [018] Levelling and counting number of nodes in subtree
 
 vector<ll> adj_list[maxn];
 vector<ll>::iterator it;
@@ -617,7 +617,7 @@ void searc_h(ll dad, ll son) {
 
 }
 
-// Graph Coloring
+// [019] Graph Coloring
 
 ll maxcolor(ll src) {
 
@@ -654,7 +654,7 @@ ll maxcolor(ll src) {
     return max(redkount, greenkount);
 }
 
-// Diameter of a Tree/BFS with DFS
+// [020] Diameter of a Tree/BFS with DFS
 
 vector<ll> adj_list[200005];
 ll level[200005];
@@ -703,7 +703,7 @@ in_the_diameter_of_tree_main() {
 }
 
 
-// Constructing priority queue
+// [021] Constructing priority queue
 
 // এখানে arg কে প্রায়োরিটি কিউতে টপে রাখা হবে। 
 // arg এর লেংথ বেশি হলে প্রায়োরিটি পাবে।
@@ -733,7 +733,7 @@ struct info {
 // initialise priority queue
 priority_queue<info> pq;
 
-// Invoke compare in sorting vector
+// [022] Invoke compare in sorting vector
 sort(strs.begin(), strs.end(), 
     [](const auto &a, const auto &b) {
         if (a.size() == b.size()) return a < b;
@@ -741,7 +741,7 @@ sort(strs.begin(), strs.end(),
     }
 );
 
-// Check if subsequnce of other (Bruteforce)
+// [023] Check if subsequnce of other (Bruteforce)
 bool isSubsequence(string subseqholder, string subseqcandidate) {
     int pointer = 0;
     for (int i = 0; i < subseqcandidate.size(); i++) {        
@@ -758,7 +758,7 @@ bool isSubsequence(string subseqholder, string subseqcandidate) {
     return true;
 }
 
-// Printing Permutations
+// [024] Printing Permutations
 
 void permutation(ll lo, ll hi) {
 
@@ -792,7 +792,7 @@ do {
     cout << arr[0] << " " << arr[1] << " " << arr[2] << "\n"; 
 } while (prev_permutation(arr, arr + 3)); 
 
-// Segment Tree: The Mighty Segment Tree
+// [025] Segment Tree: The Mighty Segment Tree
 
 #define mx 100001LL
 ll arr[mx];
@@ -880,7 +880,7 @@ int seg_tree_main() {
     return 0;
 }
 
-// Upper Bound and Lower Bound
+// [026] Upper Bound and Lower Bound
 
 Iterator lower_bound (Iterator first, Iterator last, const val)
 Iterator upper_bound (Iterator first, Iterator last, const val)
@@ -1021,7 +1021,7 @@ int in_upper_lower_bound_main()
     return 0; 
 } 
 
-// LCA: Lowest Common Ancestor
+// [027] LCA: Lowest Common Ancestor
 // See Shafayet Blog for detail: http://www.shafaetsplanet.com/?p=1831
 // https://ideone.com/LK6jk0
 
@@ -1132,7 +1132,7 @@ int main() {
     }
 }
 
-// Disjoint Set Union
+// [028] pDisjoint Set Union
 
 ll parent[100009], ranks[100009];
 
@@ -1167,7 +1167,7 @@ ll make_friendship_and_kount_friends_in_circle(ll node1, ll node2) {
     }
 }
 
-// Merge Sort (n log n)
+// [029] Merge Sort (n log n)
 
 void merge_sort(ll* ara, ll lo, ll hi) {
     if (lo == hi) {
@@ -1204,7 +1204,7 @@ void merge_sort(ll* ara, ll lo, ll hi) {
     }
 }
 
-// Queue Using Stack
+// [030] Queue Using Stack
 
 class MyQueue {
     // Queue Using Stack
@@ -1253,7 +1253,7 @@ public:
     }
 };
 
-// Build a Balanced Binary Tree From a Sorted Array
+// [031] Build a Balanced Binary Tree From a Sorted Array
 
 struct TreeNode {
     int val;
@@ -1282,6 +1282,39 @@ private:
 public:
     TreeNode* sortedArrayToBST(vector<int>& nums) {
         return go(nums, 0, nums.size()-1);
+    }
+};
+
+// [032] Reversing a Linked List
+
+// Definition for singly-linked list.
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+
+        ListNode* prev = nullptr;
+        ListNode* curr = head;
+        ListNode* newHead = head;
+
+        while (curr) {
+            ListNode* toGo = curr->next; // Next Node of the current linked list
+
+            curr->next = prev; // move the edge in opposite direction
+            prev = curr; // will be the 'next' of the next node of current linked list
+            newHead = curr; // new linked list will start from here, if there is no node ahead in the current linked list
+
+            curr = toGo;
+        }   
+
+        return newHead;
     }
 };
 
