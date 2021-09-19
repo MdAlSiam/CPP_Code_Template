@@ -1380,8 +1380,6 @@ public:
                 long long int stopVal = -1;
 
                 for (pair<long long int, long long int> ypair : ys) {
-                    // if (ypair.first <= ypair.second);
-                    // else swap(ypair.first, ypair.second);
 
                     if (stopVal < ypair.first) {
                         // a new segment
