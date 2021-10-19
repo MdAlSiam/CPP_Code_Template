@@ -1490,6 +1490,39 @@ vector<vector<int>> subsets(vector<int>& nums) {
     return all_subsets;
 }
 
+// [036] Find the Next Greater Element | Monotone Stack | O(n)
+
+void nextGreaterElement(vector<int>& nums) {
+    // the index to the next greater element of the element at index i is stored here, initially -1
+    int nextGreaterIndex[nums.size()];
+    for (int i = 0; i < nums.size(); i++) nextGreaterIndex[i] = -1;
+
+    stack<int> st;
+
+    for (int i = 0; i < nums.size(); i++) {
+        if (st.empty()) {
+            // if the stack is empty, then no current element is waiting for the next greater
+            // just push the index so that any next greater can be inserted as the next greater of this element, later
+            st.push(i);
+            continue;
+        }
+
+        while ((not st.empty()) and (nums[i] > nums[st.top()])) {
+            // if the current element is greater than the top element at the index at the top of the stack 
+            // then the next greater of the top index element is the current element 
+            nextGreaterIndex[st.top()] = i;
+            st.pop();
+        }
+
+        // push the current index for finding its next greater further
+        st.push(i);
+    }
+
+    for (int i = 0; i < nums.size(); i++) {
+        cout << i << " " << nums[i] << " -> " << nums[nextGreaterIndex[i]] << endl;
+    }
+}
+
 void solve() {
     printf("This is a test case.\n");
 } 
