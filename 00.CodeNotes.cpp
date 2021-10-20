@@ -1470,8 +1470,6 @@ public:
 };
 
 // [035] Find All Subsets (Power Set) | Bit Mask | O(n*2^n)
-// Time Complexity: O(N) --> Each element is visited maximum twice (Once pushed in stack and once popped for stack)
-// Find Maximum Rectangle Area of a histogram: https://www.youtube.com/watch?v=ZmnqCZp9bBs
 
 vector<vector<int>> subsets(vector<int>& nums) {
     vector<vector<int>> all_subsets;
@@ -1492,7 +1490,7 @@ vector<vector<int>> subsets(vector<int>& nums) {
     return all_subsets;
 }
 
-// [036] Find the Next Greater Element | Monotone Stack | O(n)
+// [036.01] Find the Next Greater Element | Monotone Stack | O(n)
 
 void nextGreaterElement(vector<int>& nums) {
     // the index to the next greater element of the element at index i is stored here, initially -1
@@ -1523,6 +1521,48 @@ void nextGreaterElement(vector<int>& nums) {
     for (int i = 0; i < nums.size(); i++) {
         cout << i << " " << nums[i] << " -> " << nums[nextGreaterIndex[i]] << endl;
     }
+}
+
+// [036.02] Find the Maximum Area of a Histogram | Monotone Stack | O(n)
+
+// Ref: Tushar Roy's Video: https://youtu.be/ZmnqCZp9bBs
+// Ref: Tushar Roy's Code: https://github.com/mission-peace/interview/blob/master/src/com/interview/stackqueue/MaximumHistogram.java
+
+// Time Complexity: O(N) --> Each element is visited maximum twice (Once pushed in stack and once popped for stack)
+// Spact Complexity: O(N) --> At most n elemnts can be in the stack at once
+
+int largestRectangleArea(vector<int>& heights) {
+    int maxArea = 0;
+
+    heights.push_back(0);
+
+    stack<int> st;
+
+    for (int i = 0; i < heights.size(); i++) {
+        if (st.empty()) {
+            st.push(i);
+            continue;
+        }
+
+        while ((not st.empty()) and heights[i] < heights[st.top()]) {
+            int width = heights[st.top()];
+            st.pop();
+
+            int length;
+            // if stack is empty means everything till i has to be greater or equal to input[top]
+            // if stack is not empty then everythin from st.top()+1 to i-1 have to be greater or equal to input[top]
+            if (st.empty()) length = i;
+            else length = i-st.top()-1;
+
+            int area = width*length;
+
+            maxArea = max(maxArea, area);
+        }
+
+        st.push(i);
+    }
+
+    return maxArea;
 }
 
 void solve() {
