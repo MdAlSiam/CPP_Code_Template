@@ -1470,6 +1470,8 @@ public:
 };
 
 // [035] Find All Subsets (Power Set) | Bit Mask | O(n*2^n)
+// Time Complexity: O(N) --> Each element is visited maximum twice (Once pushed in stack and once popped for stack)
+// Find Maximum Rectangle Area of a histogram: https://www.youtube.com/watch?v=ZmnqCZp9bBs
 
 vector<vector<int>> subsets(vector<int>& nums) {
     vector<vector<int>> all_subsets;
