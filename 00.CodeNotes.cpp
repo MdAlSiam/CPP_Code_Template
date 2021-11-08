@@ -1565,6 +1565,31 @@ int largestRectangleArea(vector<int>& heights) {
     return maxArea;
 }
 
+// [037] Catalan Number/Count The Number of unique BST with n values
+// Problem: https://leetcode.com/problems/unique-binary-search-trees/
+// Solution: https://youtu.be/YDf982Lb84o
+
+class Solution {
+public:
+    int numTrees(int n) {
+        int dp[n+1];
+        memset(dp, 0, sizeof(dp));
+
+        dp[0] = 1; // with 0 val, we can form a empty tree
+        dp[1] = 1; // with 1 val, we can form only one tree
+
+        for (int i = 2; i <= n; i++) {
+            // if we have i vals, how many unique trees could we build
+            for (int j = 0; j < i; j++) {
+                // use j-th val as root
+                dp[i] += dp[j]*dp[i-j-1];
+            }
+        }
+
+        return dp[n];
+    }
+};
+
 void solve() {
     printf("This is a test case.\n");
 } 
