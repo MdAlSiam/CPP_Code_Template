@@ -56,12 +56,12 @@ void make_fib() {
     fib[1][0] = 1;
 
     // In the matrix, LSB at left most position
-    for(ll i = 2; i < 5005; i++) {
-        for(ll j = 0; j < 1200; j++) {
+    for (ll i = 2; i < 5005; i++) {
+        for (ll j = 0; j < 1200; j++) {
 
             fib[i][j] += fib[i-1][j] + fib[i-2][j];
 
-	        if(fib[i][j] > 9) {
+	        if (fib[i][j] > 9) {
                 fib[i][j+1] += fib[i][j] / 10;
                 fib[i][j] %= 10;
             }
@@ -82,7 +82,7 @@ ll gcd(ll a, ll b) {
 
 ll zerosinfact(ll n) {
     ll ret = 0;
-    for(ll i = 5; i <= n; i *= 5) {
+    for (ll i = 5; i <= n; i *= 5) {
         ret += (n/i);
     }
     //Also count 2s if required
@@ -133,16 +133,16 @@ void sieve1() {
     prime[0] = 2;
     ll index = 1;
 
-    for(ll i = 3; i*i <= maxn; i += 2) {
-        if(mark[i] == false) {
-            for(ll j = i*i; j <= maxn; j += i+i) {
+    for (ll i = 3; i*i <= maxn; i += 2) {
+        if (mark[i] == false) {
+            for (ll j = i*i; j <= maxn; j += i+i) {
                 mark[j] = true;
             }
         }
     }
 
-    for(ll i = 3; i <= maxn && index < (ll)sqrt(maxn)+10; i += 2) {
-        if(mark[i] == false) prime[index++] = i;
+    for (ll i = 3; i <= maxn && index < (ll)sqrt(maxn)+10; i += 2) {
+        if (mark[i] == false) prime[index++] = i;
     }
 }
 
@@ -191,6 +191,7 @@ void sieve_cumkount() {
 			for(ll j = i; j <= maxn; j += i) mark[j]++;
         }
     }
+
 	for(ll i = 0; i < 11; i++) {
 		for(ll j = 1; j <= maxn; j++) {
 			if(mark[j] == i) cumkount[i][j] = cumkount[i][j-1] + 1;
@@ -406,7 +407,7 @@ int at_main_LIS() {
     while (1) {
         cout << value[curr] << " ";
         curr = dir[curr];
-        if(dir[curr] == -1 ) {
+        if (dir[curr] == -1 ) {
             cout << value[curr] << " ";
             break;
         }
@@ -584,7 +585,7 @@ void BFS_and_Levelling(ll src) {
             ll v = *it;
             // Make the level as much as possible to make the path longer
             if (level[v] < level[u]+1) {
-                level[v] = level[u] + 1;
+                level[v] = level[u]+1;
                 q.push(v);
             }
         }
@@ -600,11 +601,10 @@ ll subordinate[maxn];
 ll profit[maxn];
 
 void searc_h(ll dad, ll son) {
-
     level[son] = level[dad] + 1;
     subordinate[son] = 1;
   
- 	for(ll i = 0; i < adj_list[son].size(); i++) {
+ 	for (ll i = 0; i < adj_list[son].size(); i++) {
  		ll son_of_son = adj_list[son][i];
  		if(son_of_son == dad) continue;
   
@@ -620,7 +620,6 @@ void searc_h(ll dad, ll son) {
 // [019] Graph Coloring
 
 ll maxcolor(ll src) {
-
     ll redkount = 0, greenkount = 0;
 
     queue<ll> q;
@@ -629,7 +628,6 @@ ll maxcolor(ll src) {
     redkount++;
 
     while (!q.empty()) {
-
         ll u = q.front();
         q.pop();
 
@@ -638,7 +636,7 @@ ll maxcolor(ll src) {
         for (it = adj_list[u].begin(); it != adj_list[u].end(); it++) {
             ll v = *it;
             if (color[v] == WHITE) {
-                if(color[u] == GREEN) {
+                if (color[u] == GREEN) {
                     color[v] = RED;
                     redkount++;
                 }
@@ -687,7 +685,7 @@ in_the_diameter_of_tree_main() {
         }
     }
 
-    // again bfs from that maxlevel node
+    // again DFS from that maxlevel node
     dfs(-1, id);
 
 	// again find new maxlevel
@@ -733,7 +731,8 @@ struct info {
 // initialise priority queue
 priority_queue<info> pq;
 
-// [022] Invoke compare in sorting vector
+// [022] Invoke compare in sorting a vector
+
 sort(strs.begin(), strs.end(), 
     [](const auto &a, const auto &b) {
         if (a.size() == b.size()) return a < b;
@@ -742,6 +741,7 @@ sort(strs.begin(), strs.end(),
 );
 
 // [023] Check if subsequnce of other (Bruteforce)
+
 bool isSubsequence(string subseqholder, string subseqcandidate) {
     int pointer = 0;
     for (int i = 0; i < subseqcandidate.size(); i++) {        
@@ -792,14 +792,15 @@ do {
     cout << arr[0] << " " << arr[1] << " " << arr[2] << "\n"; 
 } while (prev_permutation(arr, arr + 3)); 
 
-// [025] Segment Tree: The Mighty Segment Tree
+// [025] Segment Tree: The Mighty Thing
 
 #define mx 100001LL
+
 ll arr[mx];
 ll tree[3*mx];
 
 void init(ll node, ll b, ll e) {
-    //sum from b till e in tree[node]
+    // sum from b till e in tree[node]
     if (b == e) {
         tree[node] = arr[b];
         return;
@@ -1132,7 +1133,7 @@ int main() {
     }
 }
 
-// [028] pDisjoint Set Union
+// [028] Disjoint Set Union (DSU)
 
 ll parent[100009], ranks[100009];
 
@@ -1149,7 +1150,6 @@ ll find_parent_and_compress(ll node) {
 }
 
 ll make_friendship_and_kount_friends_in_circle(ll node1, ll node2) {
-
     ll u = find_parent_and_compress(node1);
     ll v = find_parent_and_compress(node2);
 
