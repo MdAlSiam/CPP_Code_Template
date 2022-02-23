@@ -1617,6 +1617,30 @@ vector<int> findAnagrams(string s, string p) {
     return ans;
 }
 
+[039] Moore's algorithm: Maximum Occuring Element at O(1) Space | LeetCode 169
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int kount = 0, res = 0;
+
+        for (int num : nums) {
+            if (kount == 0) {
+                res = num;
+            }
+
+            if (num == res) {
+                kount++;
+            }
+            else {
+                kount--;
+            }
+        }
+
+        return res;
+    }
+};
+
 void solve() {
     printf("This is a test case.\n");
 } 
