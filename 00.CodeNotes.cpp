@@ -1617,7 +1617,7 @@ vector<int> findAnagrams(string s, string p) {
     return ans;
 }
 
-[039] Moore's algorithm: Maximum Occuring Element at O(1) Space | LeetCode 169
+// [039] Moore's algorithm: Maximum Occuring Element at O(1) Space | LeetCode 169
 
 class Solution {
 public:
@@ -1638,6 +1638,36 @@ public:
         }
 
         return res;
+    }
+};
+
+
+// [040] LeetCode 287: Slow Fast Algorithm to find duplicate | O(n), no extra space and modification in the main array
+// Learn: https://www.youtube.com/watch?v=32Ll35mhWg0
+
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int slow = 0;
+        int fast = 0;
+
+        while (true) {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+
+            if (slow == fast) break;
+        }
+
+        fast = 0;
+
+        while (true) {
+            slow = nums[slow];
+            fast = nums[fast];
+
+            if (slow == fast) break;
+        }
+
+        return slow; 
     }
 };
 
