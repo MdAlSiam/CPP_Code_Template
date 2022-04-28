@@ -4,11 +4,14 @@
 
 <p style="font-family: Arial">
 00.CodeNotes.cpp <br/>
-01.AlgoSummary.cpp <br/>
-02.CP_01_02.cpp <br/>
-03.OOP.? <br/>
-04.DBMS.? <br/>
-05.SWE.? <br/>
-06.Graph.? <br/>
-05.ML_AI_Notes.? <br/>
+01.LeetCode.cpp <br/>
+02.AlgoSummary.cpp <br/>
+03.AlgoKhata.cpp <br/>
+<br/>
+04.CP_01_02.cpp <br/>
+05.OOP.cpp <br/>
+06.DBMS.txt <br/>
+07.SWE.txt <br/>
+<br/>
+08.ML_AI_Basic_Algorithms.py <br/>
 </p>
