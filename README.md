@@ -4,9 +4,8 @@
 
 <p style="font-family: Arial">
 00.CodeNotes.cpp <br/>
-01.LeetCode.cpp <br/>
-02.AlgoSummary.cpp <br/>
-03.AlgoKhata.cpp <br/>
+01.LeetCode: Striver <br/>
+02.AlgoKhata.cpp <br/>
 <br/>
 04.CP_01_02.cpp <br/>
 05.OOP.cpp <br/>
