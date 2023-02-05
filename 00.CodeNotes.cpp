@@ -159,7 +159,7 @@ void ektuonnorokom() {
 	}
 }
 
-// Sieve 3 (Time-Memory Efficient)
+// Sieve 3 (***Maybe, Time-Memory Efficient)
 
 bool mark[maxn/2];
 ll primes[maxn/10];
@@ -414,6 +414,8 @@ int at_main_LIS() {
     }
 }
 
+// LIS - DP and Tail
+
 class Solution {
 public:
     // LIS Two Approaches - LeetCode 400
@@ -636,7 +638,7 @@ void BFS_and_Levelling(ll src) {
     }
 }
 
-// [018] Levelling and counting number of nodes in subtree
+// [018] Levelling and counting number of nodes in subtree/BFS using DFS
 
 vector<ll> adj_list[maxn];
 vector<ll>::iterator it;
@@ -696,7 +698,7 @@ ll maxcolor(ll src) {
     return max(redkount, greenkount);
 }
 
-// [020] Diameter of a Tree/BFS with DFS
+// [020] Diameter of a Tree/BFS using DFS
 
 vector<ll> adj_list[200005];
 ll level[200005];
@@ -1142,7 +1144,7 @@ ll lcaQuery(ll p, ll q) {
     return dadNode[p];
 }
 
-int main() {
+int LCA_main() {
     ll n, nQueries;
     cin >> n >> nQueries;
     for (ll i = 0; i <= n; i++) {
@@ -1363,6 +1365,7 @@ public:
 };
 
 // [033] 2D Line Sweeping (Requires 1D Line Sweeping) [LC Rectangle Area II]
+// Shefin's Blog: https://shefin-cse16.github.io/post/loj-1120-editorial/
 
 class Solution {
 public:
@@ -1770,7 +1773,7 @@ public:
     }
 };
 
-// [042] First Missing Positive | MEX: Minimum Excluded | LeetCode XXX
+// [042] First Missing Positive | MEX: Minimum Excluded | LeetCode 41
 
 class Solution {
 public:
