@@ -120,3 +120,31 @@ void merge(int arr1[], int arr2[], int n, int m) {
 
 // TC: O(n), Gap Method
 // See implementation here: https://takeuforward.org/data-structure/merge-two-sorted-arrays-without-extra-space/
+
+// 10. Find Duplicate Number
+
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int slow = 0;
+        int fast = 0;
+
+        while (true) {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+
+            if (slow == fast) break;
+        }
+
+        fast = 0;
+
+        while (true) {
+            slow = nums[slow];
+            fast = nums[fast];
+
+            if (slow == fast) break;
+        }
+
+        return slow; 
+    }
+};
