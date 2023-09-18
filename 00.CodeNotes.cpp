@@ -484,7 +484,7 @@ void make_lcs(string str1, string str2) {
     ll lcs_tab[str1.length()][str2.length()];
 
     for (ll i = 0; i < str1.length(); i++) {
-        for (ll j = 0; i < str2.length(); j++) {
+        for (ll j = 0; j < str2.length(); j++) {
             if (i == 0 or j == 0) {
                 lcs_tab[i][j] = 0;
             }
