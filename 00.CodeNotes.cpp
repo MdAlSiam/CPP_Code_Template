@@ -658,9 +658,6 @@ void searc_h(ll dad, ll son) {
   
  		subordinate[son] += subordinate[son_of_son];
  	}
- 
-    profit[son] = subordinate[son] - 1 - level[son];
-
 }
 
 // [019] Graph Coloring
